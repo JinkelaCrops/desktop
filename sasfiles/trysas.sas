@@ -5,7 +5,7 @@ libname Learnsas "d:\SAS_script";
 data Learnsas.Customer_trysas12;
 input Cust_ID Order_ID Order_DT $ Txn_Amt @@;
 cards;
-1001    2016010110      20160102        10
+1001    2016010110      20160106        100
 1001    2016020302      20160203        30.3
 1002    2016010102      20160101        20
 1003    2016020301      20160203        30
@@ -15,12 +15,13 @@ cards;
 1006    2016030807      20160309        33
 1007    2016030810      20160309        33.5
 1008    2016030811      20160309        40
+1010    2016030812      20160309        80
 ;
 run;
 /*-------------------------------------proc步-----------------------------------------------------*/
 /* var */
 proc print data=Learnsas.Customer_trysas12;
-var cust_id order_id; 
+var cust_id order_id order_dt; 
 run;
 proc sql;
     select * from Learnsas.Customer_trysas12

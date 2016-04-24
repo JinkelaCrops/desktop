@@ -1,0 +1,64 @@
+1                                         The SAS System
+                                                 2016年04月24日 星期日 下午04时55分16秒
+
+NOTE: Copyright (c) 2002-2010 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.3 (TS1M0 MBCS3060) 
+      Licensed to LICENCE GRATUITE EAS WINDOWS 64 BITS, Site 70109265.
+NOTE: 该会话正在平台 X64_7HOME  上执行。
+
+
+
+NOTE: “SAS 初始化”所用时间:
+      实际时间          0.35 秒
+      CPU 时间          0.24 秒
+      
+1          /* 逻辑库的设置 */
+2          libname Learnsas "d:\SAS_script";
+NOTE: 已成功分配逻辑库引用名“LEARNSAS”，如下所示: 
+       引擎:        V9 
+       物理名: d:\SAS_script
+3          /*-------------------------------------data步-----------------------------------------
+3        ! ------------*/
+4          /* 数据的导入 */
+5          data Learnsas.Customer_trysas12;
+6          input Cust_ID Order_ID Order_DT $ Txn_Amt @@;
+7          cards;
+
+NOTE: INPUT 语句到达一行的末尾，SAS 已转到新的一行。
+NOTE: 数据集 LEARNSAS.CUSTOMER_TRYSAS12 有 11 个观测和 4 个变量。
+NOTE: “DATA 语句”所用时间（总处理时间）:
+      实际时间          0.02 秒
+      CPU 时间          0.01 秒
+      
+
+19         ;
+20         run;
+21         /*-------------------------------------proc步-----------------------------------------
+21       ! ------------*/
+22         /* var */
+23         proc print data=Learnsas.Customer_trysas12;
+24         var cust_id order_id order_dt;
+25         run;
+
+NOTE: 从数据集 LEARNSAS.CUSTOMER_TRYSAS12. 读取了 11 个观测
+NOTE: PROCEDURE PRINT 已打印第 1 页。
+NOTE: “PROCEDURE PRINT”所用时间（总处理时间）:
+      实际时间          0.04 秒
+      CPU 时间          0.04 秒
+      
+
+26         proc sql;
+27             select * from Learnsas.Customer_trysas12
+28             where Txn_Amt>=20;
+29         quit;
+NOTE: PROCEDURE SQL 已打印第 2 页。
+NOTE: “PROCEDURE SQL”所用时间（总处理时间）:
+      实际时间          0.00 秒
+      CPU 时间          0.01 秒
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: “SAS 系统”所用时间:
+      实际时间          0.49 秒
+      CPU 时间          0.35 秒
+      
