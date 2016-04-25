@@ -1,0 +1,258 @@
+<p>&lt;!DOCTYPE html&gt;</p>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="file:///C:/Users/GdnmTlt/Desktop/mdfiles/Bootstrap332.css">
+</head>
+<body>
+<article>
+
+# Markdown and VS Code
+
+Working with Markdown in Visual Studio Code can be pretty fun and there are a number of Markdown specific features that will help you be more productive.
+
+## Markdown Preview
+
+VS Code supports Markdown files out of the box. You just start writing Markdown text, save the file with the .md extension and then you can toggle the visualization of the editor between the code and the preview of the Markdown file; obviously, you can also open an existing Markdown file and start working with it. To switch between views you just have to press <code class="keybinding">Ctrl+Shift+V</code> in the editor. You can view the preview side-by-side ( <code class="keybinding">Ctrl+K V</code> ) with the file you are editing and see changes reflected in real-time as you edit.
+
+Here is an example with a very simple file.
+
+<img class="center" src="file:///C:/Users/GdnmTlt/Desktop/dwd/Markdown_preview.png" alt="Markdown Preview">
+
+&gt; <strong>Tip:</strong> You can also click on the icon on the top right of the preview window to switch back and forth between source and preview mode.
+
+## Using your own CSS
+By default, we use a CSS style for the preview that matches the style of VS Code. If you want to use your own CSS for theMarkdown preview, update the <code>&quot;markdown.styles&quot;: []</code> with the comma-separated list of URL(s) for your style sheet(s).
+
+For instance, in the screen shot above we used a custom CSS to change the default font for the page and changed the color for the H1 title.
+
+Here is the relevant CSS:
+
+<code>css
+body{
+    font-family: &#39;Segoe UI&#39;, Tahoma, Geneva, Verdana, sans-serif
+}
+
+h1{
+    color: cornflowerblue
+}</code>
+
+Use <strong>File</strong> &gt; <strong>Preferences</strong> &gt; <strong>Workspace Settings</strong> to bring up the workspace <code>settings.json</code> file and make this update:
+
+<code>json
+// Place your settings in this file to overwrite default and user settings.
+{
+    &quot;markdown.styles&quot;: &quot;Style.css&quot;
+}</code>
+
+## Snippets for Markdown
+
+There are several built-in Markdown snippets included in VS Code - simply press <code class="keybinding">Ctrl+Space</code> (Trigger Suggest) and we will give you a context specific list of suggestions.
+
+&gt; <strong>Tip:</strong> You can add in your own User Defined Snippets for Markdown. Take a look at <a href="http://code.visualstudio.com/docs/customization/userdefinedsnippets">User Defined</a> to find out how.
+
+## Compiling Markdown into HTML
+
+VS Code can integrate with Markdown compilers through our integrated <a href="http://code.visualstudio.com/docs/editor/tasks">task runner</a>. We can use this to compile <code>.md</code> files into <code>.html</code> files. Let&#39;s walk through compiling a simple
+Markdown document.
+
+### Step 1: Install a Markdown compiler
+
+For this walkthrough, we will use the popular <a href="https://nodejs.org/">Node.js</a> module, <a href="https://www.npmjs.com/package/marked">marked</a>.
+
+<code>npm install -g marked</code>
+
+&gt; <strong>Note:</strong> There are many Markdown compilers to choose from beyond <strong>marked</strong>, such as <a href="https://www.npmjs.com/package/markdown-it">markdown-it</a>. Pick the one that best suits your needs and environment.
+
+### Step 2: Create a simple MD file
+
+Open VS Code on an empty folder and create a <code>sample.md</code> file.
+
+&gt; <strong>Note:</strong> You can open a folder with VS Code by either selecting the folder with <strong>File</strong> &gt; <strong>Open Folder...</strong><code>or</code>navigating to the folder and typing <code>code .</code> at the command line.
+
+Place the following source code in that file:
+
+    Hello Markdown in VS Code!
+    ===============================
+
+    This is a simple introduction to compiling Markdown in VS Code.
+
+    Things you&#39;ll need:
+
+    <em> <a href="https://nodejs.org">node</a>
+    </em> <a href="https://www.npmjs.com/package/marked">marked</a>
+    <em> <a href="/docs/editor/tasks">tasks.json</a>
+
+    ## Section Titles
+    &gt; This block quote is here for your information.
+
+### Step 3: Create tasks.json
+
+The next step is to set up the task configuration file <code>tasks.json</code>. To do this, open the <strong>Command Palette</strong> with <code class="keybinding">F1</code> and type in <strong>Configure Task Runner</strong>, press <code class="keybinding">Enter</code> to select it.
+
+It will present a list of possible <code>tasks.json</code> templates to choose from. Select <code>Others</code> since we
+want to run an external command.
+
+This generate a <code>tasks.json</code> file in your workspace <code>.vscode</code> folder with the following content:
+
+<code>json
+{
+    // See http://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    &quot;version&quot;: &quot;0.1.0&quot;,
+    &quot;command&quot;: &quot;echo&quot;,
+    &quot;isShellCommand&quot;: true,
+    &quot;args&quot;: [&quot;Hello World&quot;],
+    &quot;showOutput&quot;:  &quot;always&quot;
+}</code>
+
+Since we want to use <strong>marked</strong> to compile the Markdown file, we change the contents as follows:
+
+<code>json
+{
+    // See http://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    &quot;version&quot;: &quot;0.1.0&quot;,
+    &quot;command&quot;: &quot;marked&quot;,
+    &quot;isShellCommand&quot;: true,
+    &quot;args&quot;: [&quot;sample.md&quot;, &quot;-o&quot;, &quot;sample.html&quot;],
+    &quot;showOutput&quot;:  &quot;always&quot;
+}</code>
+
+&gt; <strong>Tips:</strong> While the sample is there to help with common configuration settings, IntelliSense is available
+for the <code>tasks.json</code> file as well to help you along. Use <code class="keybinding">Ctrl+Space</code> to see the available settings.
+
+Under the covers, we interpret <strong>marked</strong> as an external task runner exposing exactly one task: the compiling
+of Markdown files into HTML files. The command we run is <code>marked sample.md -o sample.html</code>.
+
+### Step 4: Run the Build Task
+
+As this is the only task in the file, you can execute it by simply pressing <code class="keybinding">Ctrl+Shift+B</code>(<strong>Run Build Task</strong>).At this point, you should see an additional file show up in the file list <code>sample.html</code>.
+
+The sample Markdown file did not have any compile problems, so by running the task all that happened was a corresponding
+<code>sample.html</code> file was created.
+
+## Automating Markdown compilation
+
+Let&#39;s take things a little further and automate Markdown compilation with VS Code. We can do so with the same task runner
+integration as before, but with a few modifications.
+
+### Step 1: Install Gulp and some plug-ins
+
+We will use <a href="http://gulpjs.com/">Gulp</a> to create a task that will automate Markdown compilation. We will also
+use the <a href="https://www.npmjs.com/package/gulp-markdown">gulp-markdown</a> plug-in to make things a little easier.
+
+<code>npm install -g gulp gulp-markdown</code>
+
+&gt; <strong>Note:</strong> gulp-markdown is a Gulp plug-in for the <strong>marked</strong> module we were using before. There are many other Gulp Markdown plug-ins you can use, as well as plug-ins for Grunt.
+
+### Step 2: Create a simple Gulp task
+
+Open VS Code on the same folder from before (contains <code>sample.md</code> and <code>tasks.json</code> under the <code>.vscode</code>folder), and create <code>gulpfile.js</code> at the root.
+
+Place the following source code in that file:
+
+```js
+var gulp = require(&#39;gulp&#39;);
+var markdown = require(&#39;gulp-markdown&#39;);
+
+gulp.task(&#39;markdown&#39;, function() {
+    return gulp.src(&#39;**/</em>.md&#39;)
+        .pipe(markdown())
+        .pipe(gulp.dest(function(f) {
+   return f.base;
+        }));
+});
+
+gulp.task(&#39;default&#39;, function() {
+    gulp.watch(&#39;<strong>/<em>.md&#39;, [&#39;markdown&#39;]);
+});
+```
+
+What is happening here?
+
+</em> We are watching for changes to any Markdown file in our workspace, i.e. the current folder open in VS Code.
+<em> We take the set of Markdown files that have changed, and run them through our Markdown compiler, i.e. <code>gulp-markdown</code>.
+</em> We now have a set of HTML files, each named respectively after their original Markdown file. We then put these files in
+the same directory.
+
+### Step 3: Modify the configuration in tasks.json for watching
+
+To complete the tasks integration with VS Code, we will need to modify the task configuration from before to set a watch
+on the default Gulp task we just created.
+
+Your tasks configuration should now look like this:
+
+<code>json
+{
+    &quot;version&quot;: &quot;0.1.0&quot;,
+    &quot;command&quot;: &quot;gulp&quot;,
+    &quot;isShellCommand&quot;: true,
+    &quot;tasks&quot;: [
+        {
+   &quot;taskName&quot;: &quot;default&quot;,
+   &quot;isBuildCommand&quot;: true,
+   &quot;showOutput&quot;: &quot;always&quot;,
+   &quot;isWatching&quot;: true
+        }
+    ]
+}</code>
+
+### Step 4: Run the gulp Build Task
+
+Again, as this is the only task in the file you can execute it by simply pressing Ctrl+Shift+B(</strong>Run Build Task<strong>). But this time, we&#39;ve set a watch so the Status Bar should indicate that on the left-hand side.
+
+<img src="file:///C:/Users/GdnmTlt/Desktop/dwd/Markdown_taskwatching.png" alt="Task watching spinner">
+
+At this point, if you create and/or modify other Markdown files, you will see the respective HTML files generated and/or changes reflected on save. You can also enable <a href="http://code.visualstudio.com/docs/editor/codebasics#_saveauto-save">Auto Save</a> to make things even more streamlined.
+
+If you want to stop the watch, you can press <code class="keybinding">Ctrl+Shift+B</code> again and click </strong>Terminate Running Task<strong>in the message box.<code>or</code>you can use the </strong>Command Palette<strong> with <code class="keybinding">F1</code> and find the terminate command there.
+
+## Next Steps
+
+Read on to find out about:
+
+<em> <a href="http://code.visualstudio.com/docs/customization/overview">Customization</a> - Dig into additional settings such as word wrap and User Defined Snippets.
+</em> <a href="http://code.visualstudio.com/docs/languages/css">CSS, Less and Sass</a> - Want to edit your CSS? VS Code has great support for CSS, Less and Sass editing.
+
+## Common Questions
+
+</strong>Q: Is there spell checking?<strong>
+
+</strong>A:<strong> Not in VS Code out of the box but there are <a href="https://marketplace.visualstudio.com/items/seanmcbreen.Spell">spell checking extensions</a>. Be sure to check the <a href="https://marketplace.visualstudio.com/vscode">VS Code Marketplace</a> to look for useful
+extensions to help with your workflow.
+
+</strong>Q: Does VS Code support <a href="https://help.github.com/articles/github-flavored-markdown">GitHub Flavored Markdown</a>?<strong>
+
+</strong>A:<strong> We are using the <a href="https://github.com/chjj/marked">marked</a> library with the <code>gfm</code> option set to <a href="https://github.com/chjj/marked#gfm">true</a>.
+
+</strong>Q: In the walkthrough above, I didn&#39;t find the Configure Task Runner command in the Command Palette?<strong>
+
+</strong>A:<strong> You may have opened a file in VS Code rather than a folder. You can open a folder by either selecting the folder with </strong>File<strong> &gt; </strong>Open Folder...<em>*<code>or</code>navigating to the folder and typing <code>code .</code> at the command line.
+
+## Additional Command line arguments
+
+Here are optional command line arguments you can use when starting VS Code at the command line via <code>code</code>:
+
+Argument|Description
+--|--
+<code>-h</code> or <code>--help</code>        |Print usage
+<code>-v</code> or <code>--version</code>     |Print VS Code version (e.g. 0.10.10)
+<code>-n</code> or <code>--new-window</code>  |Opens a new session of VS Code instead of restoring the previous session.
+<code>-r</code> or <code>--reuse-window</code>|Forces opening a file or folder in the last active window.
+<code>-g</code> or <code>--goto</code>        |When used with </em>file:line:column?<em>, opens a file at a specific line and optional column position. This argument is provided since some operating systems permit <code>:</code> in a file name.
+</em>file<em>                  |Name of a file to open. If the file doesn&#39;t exist, it will be created and marked as edited. You can specify multiple files by separating each file name with a space.
+</em>file:line:column?<em>     |Name of a file to open at the specified line and optional column position. You can specify multiple files in this manner, but you must use the <code>-g</code> argument (once) before using the </em>file:line:column?<em> specifier.
+</em>folder*                |Name of a folder to open. You can specify multiple folders.
+<code>-d</code> or <code>--diff</code>        |Open a file difference editor. Requires two file paths as arguments.
+<code>--locale</code>              |Set the display language (locale) for the VS Code session. Supported locales are: <code>en-US</code>, <code>zh-TW</code>, <code>zh-CN</code>, <code>fr</code>, <code>de</code>, <code>it</code>, <code>ja</code>, <code>ko</code>, <code>ru</code>, <code>es</code>
+<code>--disable-extensions</code>  |Disable all installed extensions. Extensions will still be visible in the <code>Extensions: Show Installed Extensions</code> dropdown but they will never be activated.
+<code>-w</code> or <code>--wait</code>        |Wait for the window to be closed before returning
+
+For both files and folders, you can use absolute or relative paths. Relative paths are relative to the current directory of the command prompt where you run <code>code</code>.
+
+If you specify more than one file or folder at the command line, VS Code will open only a single instance.
+
+</article>
+</body>
+</html>

@@ -1,0 +1,69 @@
+1                                         The SAS System
+                                                 2016年04月25日 星期一 下午03时23分07秒
+
+NOTE: Copyright (c) 2002-2010 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.3 (TS1M0 MBCS3060) 
+      Licensed to LICENCE GRATUITE EAS WINDOWS 64 BITS, Site 70109265.
+NOTE: 该会话正在平台 X64_7HOME  上执行。
+
+
+
+NOTE: “SAS 初始化”所用时间:
+      实际时间          0.67 秒
+      CPU 时间          0.24 秒
+      
+1          Marked Demo
+           ______
+           180
+ERROR 180-322: 语句无效或未按正确顺序使用。
+
+2          ======================
+3          
+4          这是一个Marked库使用的例子。 http://blog.fens.me/nodejs-markdown-marked/
+5          
+6          > A full-featured markdown parser and compiler, written in JavaScript. Built
+7          > for speed.
+8          
+9          ![NPM version](https://badge.fury.io/js/marked.png)[badge]
+10         
+11         ## Install
+12         
+13         ``` bash
+14         npm install marked --save
+15         ```
+16         
+17         ## 列表测试
+18         
+19         + 列表测试，行1
+20         + 列表测试，行2
+21         + 列表测试，行3
+22         + 列表测试，行4
+23         
+24         ## 表格测试
+25         
+26         A | B | C
+27         --|--|--
+28         A1 | B1 | C1
+29         A2 | B2 | C2
+30         A3 | B3 | C3
+31         
+32         ```java
+33         public class HelloWorld{
+34         	public static void main(String[] args){
+35         		System.out.println("Hello, world!");
+
+36         	}
+            _
+            180
+ERROR 180-322: 语句无效或未按正确顺序使用。
+
+37         }
+38         ```
+
+ERROR: 在以下页上打印错误: 1.
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: “SAS 系统”所用时间:
+      实际时间          0.72 秒
+      CPU 时间          0.26 秒
+      

@@ -1,0 +1,38 @@
+git remote add origin https://github.com/JinkelaCrops/desktop.git
+git push -u origin master
+
+----Notepad++------- 
+"C:\Program Files\SASHome\SASFoundation\9.3\sas.exe" -config "C:\Program Files\SASHome\SASFoundation\9.3\nls\u8\sasv9.cfg" -sysin "$(FULL_CURRENT_PATH)" -log "$(CURRENT_DIRECTORY)\$(NAME_PART).log" -print "$(CURRENT_DIRECTORY)\$(NAME_PART).lst"
+"D:\Softwares\PanYanTools\SasWrap.wsf" /sasprog:"$(FULL_CURRENT_PATH)"
+
+----VSCODE---------- 
+{
+	// See http://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "C://Program Files//SASHome//SASFoundation//9.3//sas.exe",
+	"args": ["-config","C://Program Files//SASHome//SASFoundation//9.3//nls//u8//sasv9.cfg","-sysin","${file}"],
+	"showOutput": "never"
+}
+{
+	// See http://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "D://Softwares//PanYanTools//SasWrap.wsf",
+	"args": ["/sasprog:${file}"],
+	"showOutput": "never"
+}
+----Sublime Text 3-- 
+{
+	"cmd":["C://Program Files//SASHome//SASFoundation//9.3//sas.exe","-config","C://Program Files//SASHome//SASFoundation//9.3//nls//u8//sasv9.cfg","-sysin","$file"]
+}
+{
+	"cmd":["D://Softwares//PanYanTools//SasWrap.wsf","/sasprog:","$file"]
+}
+// %1不是有效的win32应用程序
+
+----UltraEditor-----
+"C:\Program Files\SASHome\SASFoundation\9.3\sas.exe" -config "C:\Program Files\SASHome\SASFoundation\9.3\nls\u8\sasv9.cfg" -sysin "%f" -log "%p%n.log" -print "%p%n.lst"
+// NO SPACE IN PATH! F**K THAT
+"C:\Program Files\SASHome\SASFoundation\9.3\sas.exe" -config "D:\Softwares\PanYanTools\GetRidofSpace\nlsu8sasv9.cfg" -sysin "%f" -log "%p%n.log" -print "%p%n.lst"
+"D:\Softwares\PanYanTools\SasWrap.wsf" /sasprog:"%f"
