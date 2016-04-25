@@ -8,7 +8,7 @@ VS Code supports Markdown files out of the box. You just start writing Markdown 
 
 Here is an example with a very simple file.
 
-<img class="center" src="file:///C:/Users/GdnmTlt/Desktop/dwd/Markdown_preview.png" alt="Markdown Preview">
+<img class="center" src="file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_preview.png" alt="Markdown Preview">
 
 > **Tip:** You can also click on the icon on the top right of the preview window to switch back and forth between source and preview mode.
 
@@ -63,7 +63,7 @@ npm install -g marked
 
 Open VS Code on an empty folder and create a `sample.md` file.
 
-> **Note:** You can open a folder with VS Code by either selecting the folder with **File** > **Open Folder...**` or `navigating to the folder and typing `code .` at the command line.
+> **Note:** You can open a folder with VS Code by either selecting the folder with **File** > **Open Folder...** or navigating to the folder and typing `code .` at the command line.
 
 Place the following source code in that file:
 
@@ -147,7 +147,7 @@ npm install -g gulp gulp-markdown
 
 ### Step 2: Create a simple Gulp task
 
-Open VS Code on the same folder from before (contains `sample.md` and `tasks.json` under the `.vscode`folder), and create `gulpfile.js` at the root.
+Open VS Code on the same folder from before (contains `sample.md` and `tasks.json` under the `.vscode` folder), and create `gulpfile.js` at the root.
 
 Place the following source code in that file:
 
@@ -202,11 +202,11 @@ Your tasks configuration should now look like this:
 
 Again, as this is the only task in the file you can execute it by simply pressing Ctrl+Shift+B(**Run Build Task**). But this time, we've set a watch so the Status Bar should indicate that on the left-hand side.
 
-<img src="file:///C:/Users/GdnmTlt/Desktop/dwd/Markdown_taskwatching.png" alt="Task watching spinner">
+<img src="file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_taskwatching.png" alt="Task watching spinner">
 
 At this point, if you create and/or modify other Markdown files, you will see the respective HTML files generated and/or changes reflected on save. You can also enable [Auto Save](http://code.visualstudio.com/docs/editor/codebasics#_saveauto-save) to make things even more streamlined.
 
-If you want to stop the watch, you can press <code class="keybinding">Ctrl+Shift+B</code> again and click **Terminate Running Task**in the message box.` or `you can use the **Command Palette** with <code class="keybinding">F1</code> and find the terminate command there.
+If you want to stop the watch, you can press <code class="keybinding">Ctrl+Shift+B</code> again and click **Terminate Running Task**in the message box. or you can use the **Command Palette** with <code class="keybinding">F1</code> and find the terminate command there.
 
 ## Next Steps
 
@@ -228,7 +228,7 @@ extensions to help with your workflow.
 
 **Q: In the walkthrough above, I didn't find the Configure Task Runner command in the Command Palette?**
 
-**A:** You may have opened a file in VS Code rather than a folder. You can open a folder by either selecting the folder with **File** > **Open Folder...**` or `navigating to the folder and typing `code .` at the command line.
+**A:** You may have opened a file in VS Code rather than a folder. You can open a folder by either selecting the folder with **File** > **Open Folder...** or navigating to the folder and typing `code .` at the command line.
 
 ## Additional Command line arguments
 
