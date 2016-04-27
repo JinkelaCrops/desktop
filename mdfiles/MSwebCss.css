@@ -73,8 +73,6 @@ p {
 	width:100%;
 	padding-top:25px;
 	padding-bottom:145px;
-	margin-right: auto;
-	margin-left: auto;
 }
 
 
@@ -226,17 +224,14 @@ ol,ul {
 table {
 	border-spacing:0;
 	border-collapse:collapse;
-	background-color:transparent
+	background-color:transparent;
+	width:100%;
+	max-width:100%;
+	margin-bottom:20px
 }
 
 th {
 	text-align:left
-}
-
-table {
-	width:100%;
-	max-width:100%;
-	margin-bottom:20px
 }
 
 table>caption+thead>tr:first-child>td,table>caption+thead>tr:first-child>th,table>colgroup+thead>tr:first-child>td,table>colgroup+thead>tr:first-child>th,table>thead:first-child>tr:first-child>td,table>thead:first-child>tr:first-child>th {
@@ -266,6 +261,17 @@ table>tbody>tr:nth-of-type(odd) {
 	.container .row {
 		margin-right: -180px;
 		margin-left: -180px;
+	}
+}
+
+@media (max-width:600px) {
+	.container {
+		padding-left:0%;
+		padding-right:0%;
+	}
+	.container .row {
+		margin-right: 0px;
+		margin-left: 0px;
 	}
 }
 

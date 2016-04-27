@@ -8,23 +8,23 @@ VS Code supports Markdown files out of the box. You just start writing Markdown 
 
 Here is an example with a very simple file.
 
-<img class="center" src="file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_preview.png" alt="Markdown Preview">
+![Markdown Preview](file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_preview.png)
 
 > **Tip:** You can also click on the icon on the top right of the preview window to switch back and forth between source and preview mode.
 
 ## Using your own CSS
-By default, we use a CSS style for the preview that matches the style of VS Code. If you want to use your own CSS for theMarkdown preview, update the `"markdown.styles": []` with the comma-separated list of URL(s) for your style sheet(s).
+By default, we use a CSS style for the preview that matches the style of VS Code. If you want to use your own CSS for theMarkdown preview, update the `"markdown.styles": []` [setting](http://code.visualstudio.com/docs/customization/userandworkspace) with the comma-separated list of URL(s) for your style sheet(s).
 
 For instance, in the screen shot above we used a custom CSS to change the default font for the page and changed the color for the H1 title.
 
 Here is the relevant CSS:
 
 ```css
-body{
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-h1{
+h1 {
     color: cornflowerblue
 }
 ```
@@ -202,7 +202,7 @@ Your tasks configuration should now look like this:
 
 Again, as this is the only task in the file you can execute it by simply pressing Ctrl+Shift+B(**Run Build Task**). But this time, we've set a watch so the Status Bar should indicate that on the left-hand side.
 
-<img src="file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_taskwatching.png" alt="Task watching spinner">
+![Task watching spinner](file:///C:/Users/GdnmTlt/Desktop/mdfiles/Markdown_taskwatching.png)
 
 At this point, if you create and/or modify other Markdown files, you will see the respective HTML files generated and/or changes reflected on save. You can also enable [Auto Save](http://code.visualstudio.com/docs/editor/codebasics#_saveauto-save) to make things even more streamlined.
 
@@ -253,3 +253,29 @@ For both files and folders, you can use absolute or relative paths. Relative pat
 
 If you specify more than one file or folder at the command line, VS Code will open only a single instance.
 
+``dwdw``
+
+# 与 following captions 进行比较
+
+敏捷的棕色狐狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。 
+
+## **与**接下来的 **cap**tions 进**行**比较
+
+敏捷 **的棕色狐** 狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。
+The qiuck brown fox jumps over the lazy dog.
+
+### 与 following captions 进行比较
+
+敏捷的棕色狐狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。
+
+#### 试试这个然后 tell what is h4
+
+敏捷的棕色狐狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。
+
+##### 试试这个然后 tell what is h5
+
+敏捷的棕色狐狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。
+
+###### 试试这个然后 tell what is h6
+
+敏捷的棕色狐狸 jump over the lazy dog. I can 吞下玻璃而不伤身体。

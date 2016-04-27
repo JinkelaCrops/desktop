@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	font-family:wf_segoe-ui_normal,ms_yahei_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif,Microsoft YaHei;
+	font-family:wf_segoe-ui_normal,ms_yahei_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
 	color:#444;
 	text-rendering:optimizeLegibility;
     background-color: #FFF;
@@ -62,7 +62,7 @@ p {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family:wf_segoe-ui_light,ms_yahei_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif,Microsoft YaHei light;
+	font-family:wf_segoe-ui_light,ms_yahei_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
 	font-weight:500;
 	line-height:1.1
 }
@@ -126,7 +126,7 @@ a:focus,a:hover {
 }
 
 strong {
-	font-weight:600;
+	font-weight:700;
 }
 
 h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
