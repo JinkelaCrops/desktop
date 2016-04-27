@@ -1,0 +1,286 @@
+html{
+	font-size:10px
+}
+
+body {
+	font-family:wf_segoe-ui_normal,ms_yahei_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color:#444;
+	text-rendering:optimizeLegibility;
+}
+
+body,html {
+	margin:0;
+	padding:0;
+	height:100%
+}
+
+@font-face {/*Chinese Normal*/
+	font-family:ms_yahei_normal;
+	src:local("Microsoft YaHei");
+	font-weight:400;
+	font-style:normal
+}
+@font-face {/*Chinese Light*/
+	font-family:ms_yahei_light;
+	src:local("Microsoft YaHei Light");
+	font-weight:400;
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
+}
+
+@font-face {/*West-European Light*/
+	font-family:wf_segoe-ui_light;
+	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot);
+	src:local("Segoe UI Light"),local("Segoe WP Light"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+	font-weight:400;
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
+}
+@font-face {/*West-European Normal*/
+	font-family:wf_segoe-ui_normal;
+	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot);
+	src:local("Segoe UI"),local("Segoe"),local("Segoe WP"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+	font-weight:400;
+	font-style:normal
+}
+@font-face {/*West-European Semibold*/
+	font-family:wf_segoe-ui_semibold;
+	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot);
+	src:local("Segoe UI Semibold"),local("Segoe Semibold"),local("Segoe WP Semibold"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.ttf) format("truetype");
+	font-weight:400;
+	font-style:normal
+}
+
+
+* {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box
+}
+
+p {
+	margin:0 0 10px
+}
+
+.docs {
+	font-size: 16px;
+	line-height:1.6
+}
+
+.container {
+	width:100%;
+	padding-top:25px;
+	padding-bottom:145px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+	font-family:wf_segoe-ui_light,ms_yahei_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	font-weight:500;
+	line-height:1.1
+}
+
+h4,h5,h6 {
+	font-weight:500;
+}
+
+.docs h1 {
+	margin-top:0;
+	margin-bottom:15px;
+}
+
+.docs h2 {
+	margin-top: 30px;
+	margin-bottom:10px;
+}
+
+.docs h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.docs h4 {
+	margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.docs h5 {
+	margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.docs h6 {
+	margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h1 {
+	font-size:4rem
+}
+h2 {
+	font-size:3rem
+}
+h3 {
+	font-size:2.2rem
+}
+h4 {
+	font-size:2.0rem
+}
+h5 {
+	font-size:1.9rem
+}
+h6 {
+	font-size:1.8rem
+}
+
+.docs .keybinding {
+	font-family:Menlo,Monaco,Consolas,Courier New,monospace;
+	padding:2px 4px;
+	font-size:90%;
+	color:#0072be;
+	background-color:#f4f2f9;
+	border-radius:4px
+}
+
+a {
+	color:#0072be;
+	text-decoration:none;
+	background-color:transparent
+}
+a:focus,a:hover {
+	text-decoration:underline
+}
+
+strong {
+	font-weight:700;
+}
+
+h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
+	font-family:wf_segoe-ui_normal,ms_yahei_normal;
+	font-weight:400;
+}
+
+img {
+    max-width:100%;
+	margin:auto;
+	vertical-align:middle;
+	border:0
+}
+
+code,kbd,pre,samp {
+	font-family:Menlo,Monaco,Consolas,"Courier New",monospace
+}
+
+code {
+	padding:2px 4px;
+	font-size:90%;
+	color:#c7254e;
+	background-color:#f9f2f4;
+	border-radius:4px
+}
+
+pre {
+	display:block;
+	padding:9.5px;
+	margin:0 0 10px;
+	font-size:13px;
+	line-height:1.42857143;
+	color:#333;
+	word-break:break-all;
+	word-wrap:break-word;
+	background-color:#f5f5f5;
+	border:1px solid #ccc;
+	border-radius:4px;
+	overflow:auto
+}
+
+pre code {
+	padding:0;
+	font-size:inherit;
+	color:inherit;
+	white-space:pre-wrap;
+	background-color:transparent;
+	border-radius:0
+}
+
+blockquote {
+	padding:10px 20px;
+	margin:0 0 20px;
+	font-size:17.5px;
+	border-left:5px solid #eee;
+}
+
+blockquote ol:last-child,blockquote p:last-child,blockquote ul:last-child {
+	margin-bottom:0
+}
+
+ol,ul {
+	margin-top:0;
+	margin-bottom:10px
+}
+
+table {
+	border-spacing:0;
+	border-collapse:collapse;
+	background-color:transparent
+}
+
+th {
+	text-align:left
+}
+
+table {
+	width:100%;
+	max-width:100%;
+	margin-bottom:20px
+}
+
+table>caption+thead>tr:first-child>td,table>caption+thead>tr:first-child>th,table>colgroup+thead>tr:first-child>td,table>colgroup+thead>tr:first-child>th,table>thead:first-child>tr:first-child>td,table>thead:first-child>tr:first-child>th {
+	border-top:0
+}
+
+table>tbody>tr>td,table>tbody>tr>th,table>tfoot>tr>td,table>tfoot>tr>th,table>thead>tr>td,table>thead>tr>th {
+	padding:8px;
+	line-height:1.42857143;
+	vertical-align:top;
+	border-top:1px solid #ddd
+}
+table>thead>tr>th {
+	vertical-align:bottom;
+	border-bottom:2px solid #ddd
+}
+
+table>tbody>tr:nth-of-type(odd) {
+	background-color:#f9f9f9
+}
+
+@media (min-width:600px) {
+	.container {
+		padding-left:30%;
+		padding-right:30%;
+	}
+	.container .row {
+		margin-right: -180px;
+		margin-left: -180px;
+	}
+}
+
+
+:after,:before {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box
+}
+
+.container:after,.container:before,.row:after,.row:before {
+	display:table;
+	content:" "
+}
+
+.container:after,.row:after {
+	clear:both
+}
