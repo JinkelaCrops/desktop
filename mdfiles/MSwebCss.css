@@ -1,57 +1,53 @@
 html{
-	font-size:10px
+	font-size:11.5px;/*10px*/
 }
 
 body {
-	font-family:wf_segoe-ui_normal,ms_yahei_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color:#444;
+	font-family:west_european_normal,chinese_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	color:#333;
+	background-color: #fff;
 	text-rendering:optimizeLegibility;
 }
 
-body,html {
+body {
 	margin:0;
-	padding:0;
-	height:100%
+	padding-top:2.5rem;
+	padding-bottom:14.5rem;
+	height:100%;
 }
 
-@font-face {/*Chinese Normal*/
-	font-family:ms_yahei_normal;
-	src:local("Microsoft YaHei");
-	font-weight:400;
-	font-style:normal
-}
-@font-face {/*Chinese Light*/
-	font-family:ms_yahei_light;
-	src:local("Microsoft YaHei Light");
+@font-face {
+	font-family:chinese_light;
+	src:url(https://jinkelacrops.github.io/fonts/HanHei-SC-thin.woff) format("woff"),local("HanHeiSC Thin");/*local("Segoe UI Light"),local("Segoe WP Light")*/
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
 
-@font-face {/*West-European Light*/
-	font-family:wf_segoe-ui_light;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot);
-	src:local("Segoe UI Light"),local("Segoe WP Light"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+@font-face {
+	font-family:chinese_normal;
+	src:url(https://jinkelacrops.github.io/fonts/HanHei-SC-text.woff) format("woff"),local("HanHeiSC Text");/*local("Segoe UI Light"),local("Segoe WP Light")*/
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
-@font-face {/*West-European Normal*/
-	font-family:wf_segoe-ui_normal;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot);
-	src:local("Segoe UI"),local("Segoe"),local("Segoe WP"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+
+@font-face {
+	font-family:west_european_light;
+	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_thin.woff) format("woff"),local("Myriad Set Pro Thin");/*local("Segoe UI Light"),local("Segoe WP Light")*/
 	font-weight:400;
-	font-style:normal
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
 }
-@font-face {/*West-European Semibold*/
-	font-family:wf_segoe-ui_semibold;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot);
-	src:local("Segoe UI Semibold"),local("Segoe Semibold"),local("Segoe WP Semibold"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.ttf) format("truetype");
+
+@font-face {
+	font-family:west_european_normal;
+	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_text.woff) format("woff"),local("Myriad Set Pro Text");/*local("Segoe UI Light"),local("Segoe WP Light")*/
 	font-weight:400;
-	font-style:normal
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
 }
+
 
 
 * {
@@ -61,78 +57,67 @@ body,html {
 }
 
 p {
-	margin:0 0 10px
+	margin:0 0 1rem
 }
 
 .docs {
-	font-size: 16px;
-	line-height:1.6
-}
-
-.container {
-	width:100%;
-	padding-top:25px;
-	padding-bottom:145px;
+	font-size: 1.6rem;/*16px*/
+	line-height:2.56rem
 }
 
 
 h1,h2,h3,h4,h5,h6 {
-	font-family:wf_segoe-ui_light,ms_yahei_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
-	font-weight:500;
-	line-height:1.1
+	font-family:west_european_light,chinese_light,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	font-weight:400;
+	line-height:4.4rem
 }
 
 h4,h5,h6 {
-	font-weight:500;
+	font-weight:400;
+}
+
+strong {
+  font-weight:600;
+}
+
+h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
+	font-weight:600;
 }
 
 .docs h1 {
-	margin-top:0;
-	margin-bottom:15px;
+	font-size:4rem;
+	margin-top:1.5rem;
+	margin-bottom:1.5rem;
 }
 
 .docs h2 {
-	margin-top: 30px;
-	margin-bottom:10px;
+	font-size:3rem;
+	margin-top: 3rem;
+	margin-bottom:1rem;
 }
 
 .docs h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+	font-size:2.2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .docs h4 {
-	margin-top: 15px;
-    margin-bottom: 10px;
+	font-size:2.0rem;
+	margin-top: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .docs h5 {
-	margin-top: 10px;
-    margin-bottom: 5px;
+  font-size:1.9rem;
+	margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .docs h6 {
-	margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-h1 {
-	font-size:4rem
-}
-h2 {
-	font-size:3rem
-}
-h3 {
-	font-size:2.2rem
-}
-h4 {
-	font-size:2.0rem
-}
-h5 {
-	font-size:1.9rem
-}
-h6 {
-	font-size:1.8rem
+		font-size:1.8rem;
+	margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .docs .keybinding {
@@ -153,14 +138,6 @@ a:focus,a:hover {
 	text-decoration:underline
 }
 
-strong {
-	font-weight:700;
-}
-
-h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
-	font-family:wf_segoe-ui_normal,ms_yahei_normal;
-	font-weight:400;
-}
 
 img {
     max-width:100%;
@@ -184,8 +161,8 @@ code {
 pre {
 	display:block;
 	padding:9.5px;
-	margin:0 0 10px;
-	font-size:13px;
+	margin:0 0 1rem;
+	font-size:1.3rem;
 	line-height:1.42857143;
 	color:#333;
 	word-break:break-all;
@@ -207,8 +184,8 @@ pre code {
 
 blockquote {
 	padding:10px 20px;
-	margin:0 0 20px;
-	font-size:17.5px;
+	margin:0 0 2rem;
+	font-size:1.75rem;
 	border-left:5px solid #eee;
 }
 
@@ -218,7 +195,7 @@ blockquote ol:last-child,blockquote p:last-child,blockquote ul:last-child {
 
 ol,ul {
 	margin-top:0;
-	margin-bottom:10px
+	margin-bottom:1rem
 }
 
 table {
@@ -227,7 +204,7 @@ table {
 	background-color:transparent;
 	width:100%;
 	max-width:100%;
-	margin-bottom:20px
+	margin-bottom:2rem
 }
 
 th {
@@ -253,28 +230,75 @@ table>tbody>tr:nth-of-type(odd) {
 	background-color:#f9f9f9
 }
 
-@media (min-width:600px) {
+@media (min-width:813px) {
 	.container {
-		padding-left:30%;
-		padding-right:30%;
-	}
-	.container .row {
-		margin-right: -180px;
-		margin-left: -180px;
+		width:833px;
+		padding:20px 30px 60px 30px;
+	  border:1px solid #ddd;
+		margin:0 auto;
 	}
 }
 
-@media (max-width:600px) {
+@media (max-width:812px) {
 	.container {
-		padding-left:0%;
-		padding-right:0%;
-	}
-	.container .row {
-		margin-right: 0px;
-		margin-left: 0px;
+		width:100%;
+		padding:20px 0 60px 0;
+	  border:1px solid #ddd;
+		margin:0 auto;
 	}
 }
 
+/* (1-40%*2)*700+280*2=700, 
+   可以在>=700px范围内实现文字宽度按浏览器宽度缩小 */
+/*
+@media (min-width:700px) {
+
+	.container {
+		padding-left:40%;
+		padding-right:40%;
+	}
+	.container .row {
+		margin-right: -280px;
+		margin-left: -280px;
+		padding:20px 30px 60px 30px;
+		border:1px solid #ddd;
+	}
+}
+*/
+
+/*  (1-40%*2)*700+250*2=640=700-30*2, 
+		(1-40%*2)*625+250*2=625 
+	    可以在[625, 700)px范围内实现留白缩小 */
+/*
+@media (max-width:699px) and (min-width:625px) {
+	.container {
+		width:100%;
+		border:1px solid #ddd;
+		padding-left:40%;
+		padding-right:40%;
+		padding-bottom:60px;
+		padding-top:20px;
+	}
+	.container .row {
+		margin-right: -250px;
+		margin-left: -250px;
+	}
+}
+*/
+
+/* 在小于625px内保证边框线 */
+/*
+@media (max-width:624px) {
+	.container {
+		border:1px solid #ddd;
+		padding:20px 0 60px 0;
+		}
+}
+
+div {
+	overflow-x:hidden;
+}
+*/
 
 :after,:before {
 	-webkit-box-sizing:border-box;
