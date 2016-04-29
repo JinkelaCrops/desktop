@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	font-family:wf_segoe-ui_normal,ms_yahei_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	font-family:chinese_normal,west_european_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
 	color:#444;
 	text-rendering:optimizeLegibility;
     background-color: #FFF;
@@ -20,41 +20,56 @@ body,html {
 	height:100%
 }
 
-@font-face {/*Chinese Normal*/
-	font-family:ms_yahei_normal;
-	src:local("Microsoft YaHei");
-	font-weight:400;
-	font-style:normal
-}
-@font-face {/*Chinese Light*/
-	font-family:ms_yahei_light;
-	src:local("Microsoft YaHei Light");
+
+@font-face {
+	font-family:chinese_light;
+	src:local("Microsoft YaHei Light"),local("Microsift YaHei UI Light"),local("HanHeiSC Thin");
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
 
-@font-face {/*West-European Light*/
-	font-family:wf_segoe-ui_light;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot);
-	src:local("Segoe UI Light"),local("Segoe WP Light"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+@font-face {
+	font-family:chinese_normal;
+	src:local("Microsoft YaHei"),local("Microsift YaHei UI"),local("HanHeiSC Text");
 	font-weight:400;
 	font-style:normal;
+	-webkit-font-smoothing:antialiased
 }
-@font-face {/*West-European Normal*/
-	font-family:wf_segoe-ui_normal;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot);
-	src:local("Segoe UI"),local("Segoe"),local("Segoe WP"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+
+@font-face {
+	font-family:chinese_semibold;
+	src:local("Microsoft YaHei Bold"),local("Microsift YaHei UI Bold"),local("HanHeiSC SemiBold");
 	font-weight:400;
-	font-style:normal
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
 }
-@font-face {/*West-European Semibold*/
-	font-family:wf_segoe-ui_semibold;
-	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot);
-	src:local("Segoe UI Semibold"),local("Segoe Semibold"),local("Segoe WP Semibold"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.eot#iefix) format("embedded-opentype"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.ttf) format("truetype");
+
+
+@font-face {
+	font-family:west_european_light;
+	src:local("Segoe UI Light"),local("Segoe WP Light"),local("Myriad Set Pro Thin");
 	font-weight:400;
-	font-style:normal
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
 }
+
+@font-face {
+	font-family:west_european_normal;
+	src:local("Segoe UI"),local("Segoe"),local("Segoe WP"),local("Myriad Set Pro Text");
+	font-weight:400;
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
+}
+
+@font-face {
+	font-family:west_european_semibold;
+	src:local("Segoe UI Semibold"),local("Segoe Semibold"),local("Segoe WP Semibold"),local("Myriad Set Pro Semibold");
+	font-weight:400;
+	font-style:normal;
+	-webkit-font-smoothing:antialiased
+}
+
 
 
 p {
@@ -62,18 +77,28 @@ p {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family:wf_segoe-ui_light,ms_yahei_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
-	font-weight:500;
+	font-family:chinese_light,west_european_light,wf_segoe-ui_semilight,wf_segoe-ui_normal,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+	font-weight:400;
 	line-height:1.1
 }
 
 h4,h5,h6 {
-	font-weight:500;
+	font-weight:400;
+}
+
+strong {
+	font-family:chinese_normal,west_european_normal;
+	font-weight:600;
+}
+
+h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
+	font-family: chinese_normal,west_european_normal;
+	font-weight:400;
 }
 
 h1 {
 	font-size:4rem;
-	margin-top:0;
+	margin-top:15px;
 	margin-bottom:15px;
 }
 
@@ -123,15 +148,6 @@ a {
 }
 a:focus,a:hover {
 	text-decoration:underline
-}
-
-strong {
-	font-weight:700;
-}
-
-h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
-	font-family:wf_segoe-ui_normal,ms_yahei_normal;
-	font-weight:400;
 }
 
 img {
