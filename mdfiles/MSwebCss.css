@@ -1,9 +1,8 @@
 html{
-	font-size:0.755em;/*10px*/
+	font-size:0.75em;/*10px*/
 }
 
 body {
-	font-family:chinese_normal,west_european_normal,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
 	color:#333;
 	background-color: #fff;
 	text-rendering:optimizeLegibility;
@@ -11,60 +10,40 @@ body {
 
 body {
 	margin:0;
-	padding-top:2.5rem;
-	padding-bottom:14.5rem;
 	height:100%;
 }
 
 @font-face {
-	font-family:chinese_light;
-	src:url(https://jinkelacrops.github.io/fonts/HanHei-SC-thin.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/HanHei-SC-thin.ttf) format("truetype"),local("HanHeiSC Thin"),local("Microsoft YaHei Light"),local("Microsift YaHei UI Light");
+	font-family:Myriad_Thin_online;
+	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_thin.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/myriad-set-pro_thin.ttf) format("truetype");
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
 
 @font-face {
-	font-family:chinese_normal;
-	src:url(https://jinkelacrops.github.io/fonts/HanHei-SC-text.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/HanHei-SC-text.ttf) format("truetype"),local("HanHeiSC Text"),local("Microsoft YaHei"),local("Microsift YaHei UI");
+	font-family:Segoe_Light_online;
+	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
 
 @font-face {
-	font-family:chinese_semibold;
-	src:url(https://jinkelacrops.github.io/fonts/HanHei-SC-semibold.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/HanHei-SC-semibold.ttf) format("truetype"),local("HanHeiSC SemiBold"),local("Microsoft YaHei Bold"),local("Microsift YaHei UI Bold");
-	font-weight:400;
-	font-style:normal;
-	-webkit-font-smoothing:antialiased
-}
-
-
-@font-face {
-	font-family:west_european_light;
-	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_thin.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/myriad-set-pro_thin.ttf) format("truetype"),local("Myriad Set Pro Thin"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype"),local("Segoe UI Light"),local("Segoe WP Light");
+	font-family:Myriad_online;
+	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_text.woff) format("woff"),url(https://jinkelacrops.github.io/fonts/myriad-set-pro_text.ttf) format("truetype");
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
 
 @font-face {
-	font-family:west_european_normal;
-	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_text.woff) format("woff")url(https://jinkelacrops.github.io/fonts/myriad-set-text.ttf) format("truetype"),local("Myriad Set Pro Text"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype"),local("Segoe UI"),local("Segoe"),local("Segoe WP");
+	font-family:Segoe_online;
+	src:url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
 	font-weight:400;
 	font-style:normal;
 	-webkit-font-smoothing:antialiased
 }
-
-@font-face {
-	font-family:west_european_semibold;
-	src:url(https://jinkelacrops.github.io/fonts/myriad-set-pro_semibold.woff) format("woff")url(https://jinkelacrops.github.io/fonts/myriad-set-semibold.ttf) format("truetype"),local("Myriad Set Pro Semibold"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.woff) format("woff"),url(https://i.s-microsoft.com/fonts/segoe-ui/west-european/Semibold/latest.ttf) format("truetype"),local("Segoe UI Semibold"),local("Segoe Semibold"),local("Segoe WP Semibold");
-	font-weight:400;
-	font-style:normal;
-	-webkit-font-smoothing:antialiased
-}
-
 
 * {
 	-webkit-box-sizing:border-box;
@@ -78,28 +57,46 @@ p {
 
 .docs {
 	font-size: 1.6rem;/*16px*/
-	line-height:2.56rem
+	line-height:2.56rem;
+	text-align:justify;
 }
 
-
-h1,h2,h3,h4,h5,h6 {
-	font-family:chinese_light,west_european_light,HelveticaNeue-Thin,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,sans-serif;
+body {
+	font-family:"Myriad Set Pro Text",Myriad_online,"Segoe UI","Segoe","Segoe WP",Segoe_online,
+				lucida,Helvetica,
+		    "PingFang SC","Microsoft YaHei",sans-serif;
 	font-weight:400;
-	line-height:4.4rem
-}
-
-h4,h5,h6 {
-	font-weight:400;
-}
-
-strong {
-	font-family: chinese_semibold,west_european_semibold;
-  	font-weight:400;
 }
 
 h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong {
-	font-family: chinese_normal,west_european_normal;
+	font-family:"Myriad Set Pro Text",Myriad_online,"Segoe UI","Segoe","Segoe WP",Segoe_online,
+				lucida,Helvetica,
+				"PingFang SC","Microsoft YaHei",sans-serif;
 	font-weight:400;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family:"Myriad Set Pro Thin",Myriad_Thin_online,"Segoe UI Light","Segoe WP Light",Segoe_Light_online,
+				lucida,Helvetica,
+				"PingFang SC","Microsoft YaHei Light",sans-serif;
+	font-weight:300;
+	line-height:4.4rem;
+	text-align:	left
+}
+
+strong {
+	font-family:"Myriad Set Pro Text",Myriad_online,"Segoe UI","Segoe","Segoe WP",Segoe_online,
+				lucida,Helvetica,
+				"PingFang SC","Microssoft YaHei",sans-serif;
+  	font-weight:600;
+}
+
+th {
+	font-family:"Myriad Set Pro Text",Myriad_online,"Segoe UI","Segoe","Segoe WP",Segoe_online,
+				lucida,Helvetica,
+				"PingFang SC","Microsoft YaHei",sans-serif;
+	text-align:left;
+	font-weight:600;
 }
 
 .docs h1 {
@@ -193,8 +190,6 @@ pre {
 
 pre code {
 	padding:0;
-	font-size:inherit;
-	color:inherit;
 	white-space:pre-wrap;
 	background-color:transparent;
 	border-radius:0
@@ -225,11 +220,6 @@ table {
 	margin-bottom:2rem
 }
 
-th {
-	font-family: west_european_semibold,chinese_semibold,west_european_normal,chinese_normal;
-	text-align:left
-}
-
 table>caption+thead>tr:first-child>td,table>caption+thead>tr:first-child>th,table>colgroup+thead>tr:first-child>td,table>colgroup+thead>tr:first-child>th,table>thead:first-child>tr:first-child>td,table>thead:first-child>tr:first-child>th {
 	border-top:0
 }
@@ -250,16 +240,20 @@ table>tbody>tr:nth-of-type(odd) {
 }
 
 @media screen and (min-device-width: 862px){
-	@media (min-width:700px) {
+	body {
+		padding-top:8rem;
+	  padding-bottom:14.5rem;		
+	}
+	@media (min-width:738px) {
 	.container {
-			width:60rem;/*60*16*0.755=724.8*/
+			width:64rem;/*64*16*0.75=768*/
 			padding:2rem 3rem 6rem 3rem;
-	  	border:1px solid #ddd;
+	  		border:1px solid #ddd;
 			margin:0 auto;
 		}
 	}
 
-	@media (max-width:699.9px) {
+	@media (max-width:737.99px) {
 		.container {
 			width:100%;
 			padding:2rem 2px 6rem 2px;
@@ -272,6 +266,10 @@ table>tbody>tr:nth-of-type(odd) {
 @media screen and (max-device-width: 861px){
 	html{
 		font-size:1.4rem;/*22.4px, about 65 characters one line*/
+	}
+	body {
+		padding-top:2.5rem;
+	  padding-bottom:14.5rem;		
 	}
 	.container {
 		width:100%;
