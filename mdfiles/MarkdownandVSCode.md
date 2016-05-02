@@ -4,7 +4,7 @@ Working with Markdown in Visual Studio Code can be pretty fun and there are a nu
 
 ## Markdown Preview
 
-VS Code supports Markdown files out of the box. You just start writing Markdown text, save the file with the .md extension and then you can toggle the visualization of the editor between the code and the preview of the Markdown file; obviously, you can also open an existing Markdown file and start working with it. To switch between views you just have to press <code class="keybinding">Ctrl+Shift+V</code> in the editor. You can view the preview side-by-side ( <code class="keybinding">Ctrl+K V</code> ) with the file you are editing and see changes reflected in real-time as you edit.
+VS Code supports Markdown files out of the box. You just start writing Markdown text, save the file with the .md extension and then you can toggle the visualization of the editor between the code and the preview of the Markdown file; obviously, you can also open an existing Markdown file and start working with it. To switch between views you just have to press <code class="keybinding">Ctrl+Shift+V</code> in the editor. You can view the preview side-by-side ( <code class="keybinding">Ctrl+K V</code> ) with the file you are editing and see changes reflected in real-time as you edit.__Tips:__
 
 Here is an example with a very simple file.
 
@@ -69,15 +69,15 @@ Place the following source code in that file:
 
     Hello Markdown in VS Code!
     ===============================
-
+    
     This is a simple introduction to compiling Markdown in VS Code.
-
+    
     Things you'll need:
-
+    
     * [node](https://nodejs.org)
     * [marked](https://www.npmjs.com/package/marked)
     * [tasks.json](/docs/editor/tasks)
-
+    
     ## Section Titles
     > This block quote is here for your information.
 
@@ -116,11 +116,9 @@ Since we want to use **marked** to compile the Markdown file, we change the cont
 }
 ```
 
-> **Tips:** While the sample is there to help with common configuration settings, IntelliSense is available
-for the `tasks.json` file as well to help you along. Use <code class="keybinding">Ctrl+Space</code> to see the available settings.
+> **Tips:** While the sample is there to help with common configuration settings, IntelliSense is available for the `tasks.json` file as well to help you along. Use <code class="keybinding">Ctrl+Space</code> to see the available settings.
 
-Under the covers, we interpret **marked** as an external task runner exposing exactly one task: the compiling
-of Markdown files into HTML files. The command we run is `marked sample.md -o sample.html`.
+Under the covers, we interpret **marked** as an external task runner exposing exactly one task: the compiling of Markdown files into HTML files. The command we run is `marked sample.md -o sample.html`.
 
 ### Step 4: Run the Build Task
 
@@ -172,8 +170,7 @@ What is happening here?
 
 * We are watching for changes to any Markdown file in our workspace, i.e. the current folder open in VS Code.
 * We take the set of Markdown files that have changed, and run them through our Markdown compiler, i.e. `gulp-markdown`.
-* We now have a set of HTML files, each named respectively after their original Markdown file. We then put these files in
-the same directory.
+* We now have a set of HTML files, each named respectively after their original Markdown file. We then put these files in the same directory.
 
 ### Step 3: Modify the configuration in tasks.json for watching
 
