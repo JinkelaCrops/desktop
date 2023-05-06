@@ -1,0 +1,755 @@
+import os
+
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.prompts import PromptTemplate
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+
+os.environ["OPENAI_API_KEY"] = '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'
+
+with open("files/text.txt", encoding='utf8') as f:
+    state_of_the_union = f.read()
+text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=0, separator='\n')
+# text_splitter = NLTKTextSplitter(separator='\n')
+# texts = [t for t in state_of_the_union.split('\n') if t != '']
+texts = text_splitter.split_text(state_of_the_union)
+
+embeddings = OpenAIEmbeddings()
+
+docsearch = Chroma.from_texts(texts, embeddings,
+                              metadatas=[{"source": str(i)} for i in range(len(texts))]).as_retriever()
+
+from langchain.chains.question_answering import load_qa_chain
+from langchain.llms import OpenAI
+
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+# query = "老干妈如何加盟"
+# docs = docsearch.get_relevant_documents(query)
+# chain.run(input_documents=docs, question=query)
+#
+# # ################################################### map reduce
+#
+# question_prompt_template = """使用长篇文档的以下部分来查看其中是否有与回答问题相关的文本。
+# {context}
+# 问题: {question}
+# 回答:"""
+# QUESTION_PROMPT = PromptTemplate(
+#     template=question_prompt_template, input_variables=["context", "question"]
+# )
+#
+# combine_prompt_template = """根据以下长篇文档的提取部分和一个问题，给出最终答案。
+# 如果你不知道答案，只需说你不知道。不要试图编造答案。
+#
+# 问题: {question}
+# =========
+# {summaries}
+# =========
+# 回答:"""
+# COMBINE_PROMPT = PromptTemplate(
+#     template=combine_prompt_template, input_variables=["summaries", "question"]
+# )
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="map_reduce", return_map_steps=True,
+#                       question_prompt=QUESTION_PROMPT, combine_prompt=COMBINE_PROMPT)
+# query = "老干妈的主营产品"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+#
+# # ################################################### map rerank
+# from langchain.output_parsers import RegexParser
+#
+# output_parser = RegexParser(
+#     regex=r"(.*?)\nScore: (.*)",
+#     output_keys=["answer", "score"],
+# )
+#
+# prompt_template = """使用以下上下文片段来回答最后的问题。如果你不知道答案，只需说你不知道，不要试图编造答案。
+#
+# 除了给出答案外，还要返回一个表示回答用户问题完整程度的分数。格式应该如下: 
+#
+# 问题: [question here]
+# 回答: [answer here]
+# Score: [score between 0 and 100]
+#
+# 开始!
+#
+# Context:
+# ---------
+# {context}
+# ---------
+# 问题: {question}
+# 回答:"""
+# PROMPT = PromptTemplate(
+#     template=prompt_template,
+#     input_variables=["context", "question"],
+#     output_parser=output_parser,
+# )
+#
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="map_rerank", return_intermediate_steps=True, prompt=PROMPT)
+# query = "老干妈的主营产品"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的主营产品是调味品、酱料和腐乳。', 'score': '100'},
+# #   {'answer': ' 老干妈主要生产干货、调味品和酱料等食品。', 'score': '100'},
+# #   {'answer': ' 老干妈主要营销食品、日用品、家居用品等。', 'score': '100'},
+# #   {'answer': ' 主要生产风味豆豉、风味鸡油辣椒、香辣菜、风味腐乳等20余个系列产品。', 'score': '100'}],
+# #  'output_text': ' 老干妈的主营产品是调味品、酱料和腐乳。'}
+#
+# query = "老干妈的核心竞争力是什么"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的核心竞争力是什么心竞争力是其独特的口味和高品质的食材。',
+# #    'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力是其独特的配方，以及其高质量的食材和制作工艺。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的品牌形象，以及其高质量的产品。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的口味和酱汁，以及其高质量的食品加工技术。', 'score': '100'}],
+# #  'output_text': ' 老干妈的核心竞争力是其独特的口味和高品质的食材。'}
+#
+# query = "在一个品牌知识图谱中，与老干妈有关系的实体有哪些"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的核心竞争力是什么心竞争力是其独特的口味和高品质的食材。',
+# #    'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力是其独特的配方，以及其高质量的食材和制作工艺。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的品牌形象，以及其高质量的产品。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的口味和酱汁，以及其高质量的食品加工技术。', 'score': '100'}],
+# #  'output_text': ' 老干妈的核心竞争力是其独特的口味和高品质的食材。'}
+#
+# # ################################################### refine
+# refine_prompt_template = (
+#     "原问题如下: {question}\n"
+#     "我们已经提供了一个现有的答案: {existing_answer}\n"
+#     "我们有机会用下面的更多上下文来完善现有答案（如果需要的话）。\n"
+#     "------------\n"
+#     "{context_str}\n"
+#     "------------\n"
+#     "根据新的上下文，完善原始答案以更好地回答问题。"
+#     "如果上下文没有用，返回原始答案。"
+# )
+# refine_prompt = PromptTemplate(
+#     input_variables=["question", "existing_answer", "context_str"],
+#     template=refine_prompt_template,
+# )
+#
+# initial_qa_template = (
+#     "上下文信息如下。\n"
+#     "---------------------\n"
+#     "{context_str}"
+#     "\n---------------------\n"
+#     "根据上下文信息和没有先验知识，回答问题: {question}\n"
+# )
+# initial_qa_prompt = PromptTemplate(
+#     input_variables=["context_str", "question"], template=initial_qa_template
+# )
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="refine", return_refine_steps=True,
+#                       question_prompt=initial_qa_prompt, refine_prompt=refine_prompt)
+# query = "老干妈的核心竞争力是什么"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+
+# #######################################################################################################
+
+from langchain import OpenAI, LLMChain
+from langchain.agents import initialize_agent, Tool
+from langchain.agents import AgentType
+
+llm = OpenAI(temperature=0)
+chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+from langchain.prompts import PromptTemplate
+
+prompt = PromptTemplate(
+    input_variables=["text"],
+    template="{text}？",
+)
+llm_chain = LLMChain(llm=llm, prompt=prompt)
+
+
+def chain_run(query):
+    docs = docsearch.get_relevant_documents(query)
+    return chain.run(input_documents=docs, question=query)
+
+
+def chat_run(query):
+    return llm_chain.run(query)
+
+
+tools = [
+    Tool(
+        name="S",
+        func=chain_run,
+        description="useful for when you need to ask with search"
+    ),
+    Tool(
+        name="T",
+        func=chat_run,
+        description="useful for when you need to answer questions about current events"
+    ),
+]
+
+PREFIX = """Answer the following questions as best you can. You have access to the following tools:"""
+FORMAT_INSTRUCTIONS = """Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question"""
+SUFFIX = """Begin! 请在给出最终答案时以中文回答
+
+Question: {input}
+Thought:{agent_scratchpad}"""
+
+import re
+from typing import Union
+
+from langchain.agents.agent import AgentOutputParser
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+
+FINAL_ANSWER_ACTION = "Final Answer: "
+
+
+class MyOutputParser(AgentOutputParser):
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        if FINAL_ANSWER_ACTION in text:
+            return AgentFinish(
+                {"output": text.split(FINAL_ANSWER_ACTION)[-1].strip()}, text
+            )
+        # \s matches against tab/newline/whitespace
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, text, re.DOTALL)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        return AgentAction(action, action_input.strip(" ").strip('"'), text)
+
+
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, agent_kwargs={
+    'prefix': PREFIX,
+    'suffix': SUFFIX,
+    'format_instructions': FORMAT_INSTRUCTIONS,
+    'output_parser': MyOutputParser(),
+})
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些")
+
+
+
+
+
+
+
+C:\ProgramData\miniconda3\python.exe "C:/Program Files/JetBrains/PyCharm Community Edition 2023.1/plugins/python-ce/helpers/pydev/pydevconsole.py" --mode=client --host=127.0.0.1 --port=63430 
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\潘岩\\PycharmProjects\\pythonProject'])
+Python 3.10.9 | packaged by conda-forge | (main, Jan 11 2023, 15:15:40) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.12.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 8.12.0
+Python 3.10.9 | packaged by conda-forge | (main, Jan 11 2023, 15:15:40) [MSC v.1916 64 bit (AMD64)] on win32
+import os
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.prompts import PromptTemplate
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+os.environ["OPENAI_API_KEY"] = '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'
+with open("files/text.txt", encoding='utf8') as f:
+    state_of_the_union = f.read()
+text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=0, separator='\n')
+# text_splitter = NLTKTextSplitter(separator='\n')
+# texts = [t for t in state_of_the_union.split('\n') if t != '']
+texts = text_splitter.split_text(state_of_the_union)
+embeddings = OpenAIEmbeddings()
+docsearch = Chroma.from_texts(texts, embeddings,
+                              metadatas=[{"source": str(i)} for i in range(len(texts))]).as_retriever()
+from langchain.chains.question_answering import load_qa_chain
+from langchain.llms import OpenAI
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+# query = "老干妈如何加盟"
+# docs = docsearch.get_relevant_documents(query)
+# chain.run(input_documents=docs, question=query)
+#
+# # ################################################### map reduce
+#
+# question_prompt_template = """使用长篇文档的以下部分来查看其中是否有与回答问题相关的文本。
+# {context}
+# 问题: {question}
+# 回答:"""
+# QUESTION_PROMPT = PromptTemplate(
+#     template=question_prompt_template, input_variables=["context", "question"]
+# )
+#
+# combine_prompt_template = """根据以下长篇文档的提取部分和一个问题，给出最终答案。
+# 如果你不知道答案，只需说你不知道。不要试图编造答案。
+#
+# 问题: {question}
+# =========
+# {summaries}
+# =========
+# 回答:"""
+# COMBINE_PROMPT = PromptTemplate(
+#     template=combine_prompt_template, input_variables=["summaries", "question"]
+# )
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="map_reduce", return_map_steps=True,
+#                       question_prompt=QUESTION_PROMPT, combine_prompt=COMBINE_PROMPT)
+# query = "老干妈的主营产品"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+#
+# # ################################################### map rerank
+# from langchain.output_parsers import RegexParser
+#
+# output_parser = RegexParser(
+#     regex=r"(.*?)\nScore: (.*)",
+#     output_keys=["answer", "score"],
+# )
+#
+# prompt_template = """使用以下上下文片段来回答最后的问题。如果你不知道答案，只需说你不知道，不要试图编造答案。
+#
+# 除了给出答案外，还要返回一个表示回答用户问题完整程度的分数。格式应该如下: 
+#
+# 问题: [question here]
+# 回答: [answer here]
+# Score: [score between 0 and 100]
+#
+# 开始!
+#
+# Context:
+# ---------
+# {context}
+# ---------
+# 问题: {question}
+# 回答:"""
+# PROMPT = PromptTemplate(
+#     template=prompt_template,
+#     input_variables=["context", "question"],
+#     output_parser=output_parser,
+# )
+#
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="map_rerank", return_intermediate_steps=True, prompt=PROMPT)
+# query = "老干妈的主营产品"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的主营产品是调味品、酱料和腐乳。', 'score': '100'},
+# #   {'answer': ' 老干妈主要生产干货、调味品和酱料等食品。', 'score': '100'},
+# #   {'answer': ' 老干妈主要营销食品、日用品、家居用品等。', 'score': '100'},
+# #   {'answer': ' 主要生产风味豆豉、风味鸡油辣椒、香辣菜、风味腐乳等20余个系列产品。', 'score': '100'}],
+# #  'output_text': ' 老干妈的主营产品是调味品、酱料和腐乳。'}
+#
+# query = "老干妈的核心竞争力是什么"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的核心竞争力是什么心竞争力是其独特的口味和高品质的食材。',
+# #    'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力是其独特的配方，以及其高质量的食材和制作工艺。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的品牌形象，以及其高质量的产品。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的口味和酱汁，以及其高质量的食品加工技术。', 'score': '100'}],
+# #  'output_text': ' 老干妈的核心竞争力是其独特的口味和高品质的食材。'}
+#
+# query = "在一个品牌知识图谱中，与老干妈有关系的实体有哪些"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# # {'intermediate_steps': [{'answer': ' 老干妈的核心竞争力是什么心竞争力是其独特的口味和高品质的食材。',
+# #    'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力是其独特的配方，以及其高质量的食材和制作工艺。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的品牌形象，以及其高质量的产品。', 'score': '100'},
+# #   {'answer': ' 老干妈的核心竞争力在于其独特的口味和酱汁，以及其高质量的食品加工技术。', 'score': '100'}],
+# #  'output_text': ' 老干妈的核心竞争力是其独特的口味和高品质的食材。'}
+#
+# # ################################################### refine
+# refine_prompt_template = (
+#     "原问题如下: {question}\n"
+#     "我们已经提供了一个现有的答案: {existing_answer}\n"
+#     "我们有机会用下面的更多上下文来完善现有答案（如果需要的话）。\n"
+#     "------------\n"
+#     "{context_str}\n"
+#     "------------\n"
+#     "根据新的上下文，完善原始答案以更好地回答问题。"
+#     "如果上下文没有用，返回原始答案。"
+# )
+# refine_prompt = PromptTemplate(
+#     input_variables=["question", "existing_answer", "context_str"],
+#     template=refine_prompt_template,
+# )
+#
+# initial_qa_template = (
+#     "上下文信息如下。\n"
+#     "---------------------\n"
+#     "{context_str}"
+#     "\n---------------------\n"
+#     "根据上下文信息和没有先验知识，回答问题: {question}\n"
+# )
+# initial_qa_prompt = PromptTemplate(
+#     input_variables=["context_str", "question"], template=initial_qa_template
+# )
+# chain = load_qa_chain(OpenAI(temperature=0), chain_type="refine", return_refine_steps=True,
+#                       question_prompt=initial_qa_prompt, refine_prompt=refine_prompt)
+# query = "老干妈的核心竞争力是什么"
+# docs = docsearch.get_relevant_documents(query)
+# chain({"input_documents": docs, "question": query}, return_only_outputs=True)
+# #######################################################################################################
+from langchain import OpenAI, LLMChain
+from langchain.agents import initialize_agent, Tool
+from langchain.agents import AgentType
+llm = OpenAI(temperature=0)
+chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+from langchain.prompts import PromptTemplate
+prompt = PromptTemplate(
+    input_variables=["text"],
+    template="{text}？",
+)
+llm_chain = LLMChain(llm=llm, prompt=prompt)
+def chain_run(query):
+    docs = docsearch.get_relevant_documents(query)
+    return chain.run(input_documents=docs, question=query)
+def chat_run(query):
+    return llm_chain.run(query)
+tools = [
+    Tool(
+        name="S",
+        func=chain_run,
+        description="useful for when you need to ask with search"
+    ),
+    Tool(
+        name="T",
+        func=chat_run,
+        description="useful for when you need to answer questions about current events"
+    ),
+]
+PREFIX = """Answer the following questions as best you can. You have access to the following tools:"""
+FORMAT_INSTRUCTIONS = """Use the following format:
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question"""
+SUFFIX = """Begin!
+Question: {input}
+Thought:{agent_scratchpad}"""
+import re
+from typing import Union
+from langchain.agents.agent import AgentOutputParser
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+FINAL_ANSWER_ACTION = "Final Answer: "
+class MyOutputParser(AgentOutputParser):
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        if FINAL_ANSWER_ACTION in text:
+            return AgentFinish(
+                {"output": text.split(FINAL_ANSWER_ACTION)[-1].strip()}, text
+            )
+        # \s matches against tab/newline/whitespace
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, text, re.DOTALL)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        return AgentAction(action, action_input.strip(" ").strip('"'), text)
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, agent_kwargs={
+    'prefix': PREFIX,
+    'suffix': SUFFIX,
+    'format_instructions': FORMAT_INSTRUCTIONS,
+    'output_parser': MyOutputParser(),
+})
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些")
+Created a chunk of size 118, which is longer than the specified 100
+Created a chunk of size 118, which is longer than the specified 100
+Created a chunk of size 270, which is longer than the specified 100
+Created a chunk of size 197, which is longer than the specified 100
+Created a chunk of size 106, which is longer than the specified 100
+Created a chunk of size 143, which is longer than the specified 100
+Created a chunk of size 117, which is longer than the specified 100
+Created a chunk of size 200, which is longer than the specified 100
+Created a chunk of size 130, which is longer than the specified 100
+Created a chunk of size 115, which is longer than the specified 100
+Created a chunk of size 138, which is longer than the specified 100
+Created a chunk of size 126, which is longer than the specified 100
+Created a chunk of size 105, which is longer than the specified 100
+Created a chunk of size 266, which is longer than the specified 100
+Created a chunk of size 138, which is longer than the specified 100
+Created a chunk of size 116, which is longer than the specified 100
+Created a chunk of size 163, which is longer than the specified 100
+Created a chunk of size 135, which is longer than the specified 100
+Created a chunk of size 146, which is longer than the specified 100
+Created a chunk of size 213, which is longer than the specified 100
+Created a chunk of size 153, which is longer than the specified 100
+Created a chunk of size 169, which is longer than the specified 100
+Created a chunk of size 141, which is longer than the specified 100
+Created a chunk of size 124, which is longer than the specified 100
+Created a chunk of size 298, which is longer than the specified 100
+Created a chunk of size 197, which is longer than the specified 100
+Created a chunk of size 172, which is longer than the specified 100
+Created a chunk of size 348, which is longer than the specified 100
+Created a chunk of size 160, which is longer than the specified 100
+Created a chunk of size 128, which is longer than the specified 100
+Created a chunk of size 167, which is longer than the specified 100
+Created a chunk of size 118, which is longer than the specified 100
+Created a chunk of size 249, which is longer than the specified 100
+Created a chunk of size 317, which is longer than the specified 100
+Created a chunk of size 333, which is longer than the specified 100
+Created a chunk of size 119, which is longer than the specified 100
+Created a chunk of size 299, which is longer than the specified 100
+Created a chunk of size 286, which is longer than the specified 100
+Created a chunk of size 161, which is longer than the specified 100
+Created a chunk of size 101, which is longer than the specified 100
+Created a chunk of size 120, which is longer than the specified 100
+Created a chunk of size 207, which is longer than the specified 100
+Created a chunk of size 144, which is longer than the specified 100
+Created a chunk of size 144, which is longer than the specified 100
+Created a chunk of size 116, which is longer than the specified 100
+Created a chunk of size 111, which is longer than the specified 100
+Created a chunk of size 124, which is longer than the specified 100
+Created a chunk of size 106, which is longer than the specified 100
+Created a chunk of size 104, which is longer than the specified 100
+Created a chunk of size 106, which is longer than the specified 100
+Created a chunk of size 354, which is longer than the specified 100
+Created a chunk of size 137, which is longer than the specified 100
+Created a chunk of size 343, which is longer than the specified 100
+Created a chunk of size 137, which is longer than the specified 100
+Created a chunk of size 112, which is longer than the specified 100
+Created a chunk of size 118, which is longer than the specified 100
+Created a chunk of size 123, which is longer than the specified 100
+Created a chunk of size 131, which is longer than the specified 100
+Created a chunk of size 105, which is longer than the specified 100
+Created a chunk of size 174, which is longer than the specified 100
+Created a chunk of size 146, which is longer than the specified 100
+Created a chunk of size 137, which is longer than the specified 100
+Created a chunk of size 117, which is longer than the specified 100
+Created a chunk of size 130, which is longer than the specified 100
+Created a chunk of size 141, which is longer than the specified 100
+Created a chunk of size 201, which is longer than the specified 100
+Created a chunk of size 128, which is longer than the specified 100
+Created a chunk of size 104, which is longer than the specified 100
+Created a chunk of size 124, which is longer than the specified 100
+Created a chunk of size 120, which is longer than the specified 100
+Created a chunk of size 141, which is longer than the specified 100
+Created a chunk of size 163, which is longer than the specified 100
+Created a chunk of size 118, which is longer than the specified 100
+Created a chunk of size 122, which is longer than the specified 100
+Created a chunk of size 101, which is longer than the specified 100
+Created a chunk of size 149, which is longer than the specified 100
+Created a chunk of size 103, which is longer than the specified 100
+Created a chunk of size 149, which is longer than the specified 100
+Created a chunk of size 120, which is longer than the specified 100
+Using embedded DuckDB without persistence: data will be transient
+> Entering new AgentExecutor chain...
+ I need to find out what entities are related to Laoganma
+Action: S
+Action Input: "Laoganma" related entities
+Observation:  意外艺术 厦门意外境界文化传播有限公司, 百科商城, 知识专题, 愚人节, 节气·谷雨, 中国航天, 食品百科, 二十四节气, 环游《山海经》, 权威合作, 合作模式, 常见问题, 联系方式, 下载百科APP, 个人中心, 收藏, 播报, 编辑.
+Thought: I need to find out what entities are specifically related to Laoganma
+Action: S
+Action Input: "Laoganma" brand
+Observation:  Laoganma is a famous brand that was registered as a trademark in 1996. It is located in Nanming District, Guiyang City, Guizhou Province. It has been recognized by 8 government departments, including the Ministry of Agriculture, the National Development and Reform Commission, and the Ministry of Finance, as a national key leading enterprise in agricultural industrialization. In recent years, Laoganma has tried new marketing methods to break the stereotype of the brand and extend it to the national trend.
+Thought: I now know the final answer
+Final Answer: Laoganma is a famous brand that was registered as a trademark in 1996. It is located in Nanming District, Guiyang City, Guizhou Province. It has been recognized by 8 government departments, including the Ministry of Agriculture, the National Development and Reform Commission, and the Ministry of Finance, as a national key leading enterprise in agricultural industrialization. In recent years, Laoganma has tried new marketing methods to break the stereotype of the brand and extend it to the national trend.
+> Finished chain.
+Out[2]: 'Laoganma is a famous brand that was registered as a trademark in 1996. It is located in Nanming District, Guiyang City, Guizhou Province. It has been recognized by 8 government departments, including the Ministry of Agriculture, the National Development and Reform Commission, and the Ministry of Finance, as a national key leading enterprise in agricultural industrialization. In recent years, Laoganma has tried new marketing methods to break the stereotype of the brand and extend it to the national trend.'
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些。用中文回答")
+> Entering new AgentExecutor chain...
+ I need to find out what entities are related to Laoganma
+Action: S
+Action Input: Laoganma
+Observation:  Laoganma is a Chinese food company that has become well-known for its simple yet effective business model. They focus on large-scale distributors and take care of their own logistics, and the distributors are responsible for developing and laying out the sales network. Laoganma products can now be found in convenience stores, supermarkets, and even markets, and they have even expanded into international markets.
+Thought: I need to find out what entities are related to Laoganma
+Action: S
+Action Input: Laoganma related entities
+Observation:  Lao Gan Ma is a Chinese food company founded in 1996 in Guiyang, Guizhou Province. It has been recognized as a key agricultural industrialization enterprise by the Guizhou Provincial Agriculture Bureau and as one of the top 20 food enterprises in China by the China Food Industry Association. Its products have also been recognized as a brand product at the 2001 China International Agricultural Expo.
+Thought: I now know the final answer
+Final Answer: Lao Gan Ma is related to the following entities: the Guiyang city in Guizhou Province, the Guizhou Provincial Agriculture Bureau, the China Food Industry Association, and the 2001 China International Agricultural Expo.
+> Finished chain.
+Out[3]: 'Lao Gan Ma is related to the following entities: the Guiyang city in Guizhou Province, the Guizhou Provincial Agriculture Bureau, the China Food Industry Association, and the 2001 China International Agricultural Expo.'
+PREFIX = """Answer the following questions as best you can. You have access to the following tools:"""
+FORMAT_INSTRUCTIONS = """Use the following format:
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question"""
+SUFFIX = """Begin! 请在给出最终答案时以中文回答
+Question: {input}
+Thought:{agent_scratchpad}"""
+import re
+from typing import Union
+from langchain.agents.agent import AgentOutputParser
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+FINAL_ANSWER_ACTION = "Final Answer: "
+class MyOutputParser(AgentOutputParser):
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        if FINAL_ANSWER_ACTION in text:
+            return AgentFinish(
+                {"output": text.split(FINAL_ANSWER_ACTION)[-1].strip()}, text
+            )
+        # \s matches against tab/newline/whitespace
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, text, re.DOTALL)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        return AgentAction(action, action_input.strip(" ").strip('"'), text)
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, agent_kwargs={
+    'prefix': PREFIX,
+    'suffix': SUFFIX,
+    'format_instructions': FORMAT_INSTRUCTIONS,
+    'output_parser': MyOutputParser(),
+})
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些。用中文回答")
+> Entering new AgentExecutor chain...
+ 我需要找到一个可以搜索实体的工具
+Action: S
+Action Input: 老干妈
+Observation:  
+老干妈是陶华碧的昵称，她1947年出生于贵州省湄潭县一个偏僻的山村，20岁那年，她嫁给了206地质队的一名队员，但没过几年，丈夫就病逝了，扔下了她和两个孩子，为了生存，她不得不去打工和摆地摊。
+Thought: 我需要找到一个可以搜索实体的工具
+Action: S
+Action Input: 陶华碧
+Observation:  陶华碧是贵阳南明老干妈风味食品有限责任公司的董事长，她凭借自己独特的炒制工艺推出了别具风味的佐餐调料，令广大顾客大饱口福，津津乐道。她的定位是专产辣椒酱，把一件产品做精再做精，正是她的这种精益求精的精神，才让她收获了今日的成就。
+Thought: 我现在知道最终答案了
+Final Answer: 与老干妈有关系的实体有：陶华碧、贵阳南明老干妈风味食品有限责任公司。
+> Finished chain.
+Out[4]: '与老干妈有关系的实体有：陶华碧、贵阳南明老干妈风味食品有限责任公司。'
+tools = [
+    # Tool(
+    #     name="S",
+    #     func=chain_run,
+    #     description="useful for when you need to ask with search"
+    # ),
+    Tool(
+        name="T",
+        func=chat_run,
+        description="useful for when you need to answer questions about current events"
+    ),
+]
+PREFIX = """Answer the following questions as best you can. You have access to the following tools:"""
+FORMAT_INSTRUCTIONS = """Use the following format:
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question"""
+SUFFIX = """Begin! 请在给出最终答案时以中文回答
+Question: {input}
+Thought:{agent_scratchpad}"""
+import re
+from typing import Union
+from langchain.agents.agent import AgentOutputParser
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+FINAL_ANSWER_ACTION = "Final Answer: "
+class MyOutputParser(AgentOutputParser):
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        if FINAL_ANSWER_ACTION in text:
+            return AgentFinish(
+                {"output": text.split(FINAL_ANSWER_ACTION)[-1].strip()}, text
+            )
+        # \s matches against tab/newline/whitespace
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, text, re.DOTALL)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        return AgentAction(action, action_input.strip(" ").strip('"'), text)
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, agent_kwargs={
+    'prefix': PREFIX,
+    'suffix': SUFFIX,
+    'format_instructions': FORMAT_INSTRUCTIONS,
+    'output_parser': MyOutputParser(),
+})
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些。用中文回答")
+> Entering new AgentExecutor chain...
+ 我需要找到一个可以查询品牌知识图谱的工具
+Action: T
+Action Input: 老干妈
+Observation: 
+老干妈是一种中国传统的食品，由腐乳、豆瓣酱、花椒、辣椒、蒜苗、葱、姜、盐等调料制成，口味酸辣，香辣可口，是中国著名的调味品之一。
+Thought: 我现在知道了老干妈的相关信息
+Final Answer: 与老干妈有关系的实体有腐乳、豆瓣酱、花椒、辣椒、蒜苗、葱、姜、盐等调料。
+> Finished chain.
+Out[5]: '与老干妈有关系的实体有腐乳、豆瓣酱、花椒、辣椒、蒜苗、葱、姜、盐等调料。'
+tools = [
+    Tool(
+        name="S",
+        func=chain_run,
+        description="useful for when you need to ask with search"
+    ),
+    Tool(
+        name="T",
+        func=chat_run,
+        description="useful for when you need to answer questions about current events"
+    ),
+]
+PREFIX = """Answer the following questions as best you can. You have access to the following tools:"""
+FORMAT_INSTRUCTIONS = """Use the following format:
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question"""
+SUFFIX = """Begin! 请在给出最终答案时以中文回答
+Question: {input}
+Thought:{agent_scratchpad}"""
+import re
+from typing import Union
+from langchain.agents.agent import AgentOutputParser
+from langchain.schema import AgentAction, AgentFinish, OutputParserException
+FINAL_ANSWER_ACTION = "Final Answer: "
+class MyOutputParser(AgentOutputParser):
+    def get_format_instructions(self) -> str:
+        return FORMAT_INSTRUCTIONS
+    def parse(self, text: str) -> Union[AgentAction, AgentFinish]:
+        if FINAL_ANSWER_ACTION in text:
+            return AgentFinish(
+                {"output": text.split(FINAL_ANSWER_ACTION)[-1].strip()}, text
+            )
+        # \s matches against tab/newline/whitespace
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, text, re.DOTALL)
+        if not match:
+            raise OutputParserException(f"Could not parse LLM output: `{text}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        return AgentAction(action, action_input.strip(" ").strip('"'), text)
+agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, agent_kwargs={
+    'prefix': PREFIX,
+    'suffix': SUFFIX,
+    'format_instructions': FORMAT_INSTRUCTIONS,
+    'output_parser': MyOutputParser(),
+})
+agent.run("在一个品牌知识图谱中，与老干妈有关系的实体有哪些")
+> Entering new AgentExecutor chain...
+ 我需要找到一个可以搜索实体的工具
+Action: S
+Action Input: 老干妈
+Observation:  
+老干妈是陶华碧的昵称，她1947年出生于贵州省湄潭县一个偏僻的山村，20岁那年，她嫁给了206地质队的一名队员，但没过几年，丈夫就病逝了，扔下了她和两个孩子，为了生存，她不得不去打工和摆地摊。
+Thought: 我需要找到更多关于老干妈的实体
+Action: S
+Action Input: 老干妈 实体
+Observation:  老干妈是一个中国食品品牌，主要产品是辣椒酱。它也有实体商品，包括老干妈卫衣和老干妈联名男人装限量礼盒。
+Thought: 我现在知道有关老干妈的实体了
+Final Answer: 与老干妈有关系的实体有：老干妈卫衣、老干妈联名男人装限量礼盒、辣椒酱。
+> Finished chain.
+Out[6]: '与老干妈有关系的实体有：老干妈卫衣、老干妈联名男人装限量礼盒、辣椒酱。'
